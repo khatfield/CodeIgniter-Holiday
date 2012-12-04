@@ -149,6 +149,8 @@ class Holidays implements Iterator
             }
         }
 
+        $this->calcHolidays();
+
         return true;
     }
 
@@ -159,7 +161,12 @@ class Holidays implements Iterator
      */
     public function setGoodFriday($include = false)
     {
-        $this->good_friday  = $include;
+        if($include != $this->good_friday){
+
+            $this->good_friday  = $include;
+            $this->calcHolidays();
+
+        }
     }
 
     /**
@@ -169,7 +176,12 @@ class Holidays implements Iterator
      */
     public function setEaster($include = false)
     {
-        $this->easter      = $include;
+        if($include != $this->easter){
+
+            $this->easter = $include;
+            $this->calcHolidays();
+
+        }
     }
 
     /**
@@ -179,7 +191,13 @@ class Holidays implements Iterator
      */
     public function setObservances($include = true)
     {
-        $this->observance  = $include;
+        if($include != $this->observance){
+
+            $this->observance  = $include;
+            $this->calcHolidays();
+
+        }
+        
     }
 
     /**
@@ -191,8 +209,12 @@ class Holidays implements Iterator
      */
     public function setYear($year)
     {
-        $this->year = $year;
-        $this->calcHolidays();
+        if($year != $this->year){
+
+            $this->year = $year;
+            $this->calcHolidays();
+
+        }
     }
 
     /**
@@ -217,6 +239,8 @@ class Holidays implements Iterator
         foreach($this->holidays as $holiday){
             $return[] = array( date('n',strtotime($holiday)), date('j',strtotime($holiday)) );
         }
+        
+        return json_encode($return);
     }
 
     /**
